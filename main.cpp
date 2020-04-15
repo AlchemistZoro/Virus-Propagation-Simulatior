@@ -9,25 +9,26 @@
 #include"print.h"
 using namespace std;
 
-const int person_size = 3000;//只要超过3000就会让显卡爆炸的城市总人口
-const double u = 1;//只要调到0就万事大吉的人员流动平均意向  0~100%的移动概率
-const int original_count = 5;//对实验结果几乎没有影响的初始感染者人数0~200
-const int shadow_time =15;//完全克制医院属性的潜伏时间 0~100; 
-extern const double  broad_rate =1;//高于0.8神仙也无法改变结果的传播率
-const int receive_time = 2;//对实验结果没有卵影响的医院收治时间
-const int  bed_count = 1000 ;//永远无法改变悲惨结果的医院床位数量
+const int person_size = 3000;//城市总人口
+const double u = 1;//人员流动平均意向  0~100%的移动概率
+const int original_count = 5;//初始感染者人数0~200
+const int shadow_time =15;//潜伏时间 0~100; 
+extern const double  broad_rate =1;//传播率
+const int receive_time = 2;//医院收治时间
+const int  bed_count = 1000 ;//医院床位数量
 
 default_random_engine e; //引擎//随机数引擎的参数
+
 int person_origin = person_size;
-int shadow = 0;//并没有用过的潜伏期人数
+int shadow = 0;//潜伏期人数
 int affect = 0;//感染人数
 int hospital_count = 0;//医院里已有的病人
-extern const int cure = 0;//从来没有被用过的治愈状态
+extern const int cure = 0;//治愈状态
 extern const int orig = 1;//初始状态
 extern const int shad = 2;//潜伏期状态
 extern const int affe = 3;//被感染状态
 
-person pe_po[person_size];
+person pe_po[person_size];//人口池
 extern  const int graph_l ;
 extern const int graph_h ;
 extern int city[480][480] ;
@@ -55,6 +56,7 @@ int main()
 	}
 	srand(time(0));
 	initgraph(640, 480);	// Create a graphics window with a size of 640x480 pixels
+	system("pause");
 	set_person(pe_po, person_size);
 	print_person();
 	
@@ -101,7 +103,8 @@ int main()
 
 void set_person(person a[],int b)
 {
-	normal_distribution<double> n(240, 80); //均值, 方差
+	normal_distribution<double> n(240, 80); 
+	//均值, 方差
 	int x = 0;
 	int y = 0;
 	for (int c = 0; c != b; c++)
@@ -202,11 +205,7 @@ void print_words()
 	outtextxy(580, 140, s);
 	outtextxy(444, 60, "病毒传播天数(天):");
 	outtextxy(460, 100, "城市总人数(人):");
-	outtextxy(492, 140, "已感染(人):");
-	
-
-
-	        
+	outtextxy(492, 140, "已感染(人):");        
 }
 
 
